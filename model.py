@@ -145,7 +145,7 @@ class CNN_Model():
                 self.learning_rate = tf.div(init_learning_rate, tf.cast(self.global_step + 1, tf.float32),
                                             name='learning_rate')
             else:
-                self.learning_rate = init_learning_rate
+                self.learning_rate = tf.constant(init_learning_rate, name='learning_rate')
             self.optimizer = tf.train.AdamOptimizer(self.learning_rate).minimize(self.loss, self.global_step)
             
     def add_summaries(self, name):
