@@ -130,12 +130,15 @@ class CNN_Model():
                             lambda: tf.constant(1, tf.float32), name='keep_prob')
         return tf.nn.dropout(tensor, keep_prob)
     
-    def add_mse_loss(self, name):
+    def add_mse_loss(self, name, l2=0):
         """Add quadratic loss.
         """
         with tf.variable_scope(name):
             loss = tf.squared_difference(self.templates, self.layers[-1])
             self.loss = tf.reduce_mean(loss)
+            if l2:
+                regularizer = l2 * tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if 'bias' not in v.name])
+                self.loss = self.loss + regularizer
             
     def add_adam_optimizer(self, name, init_learning_rate, decay):
         """Add AdamOptimizer to minimize loss.
