@@ -137,7 +137,8 @@ class CNN_Model():
             loss = tf.squared_difference(self.templates, self.layers[-1])
             self.loss = tf.reduce_mean(loss)
             if l2:
-                regularizer = l2 * tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if 'bias' not in v.name])
+                regularizer = l2 * tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() 
+                                             if ('bias' not in v.name) and ('gamma' not in v.name) and ('beta' not in v.name)])
                 self.loss = self.loss + regularizer
             
     def add_adam_optimizer(self, name, init_learning_rate, decay):

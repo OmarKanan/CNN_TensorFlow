@@ -40,5 +40,5 @@ unique_ops
 
 # Get parameters
 for var in tf.trainable_variables():
-    print(var.name, var.get_shape(), var.get_shape().num_elements())
+        print(var.name, var.get_shape(), var.get_shape().num_elements())
     
