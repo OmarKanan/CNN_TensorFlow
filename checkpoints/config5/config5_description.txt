@@ -26,7 +26,7 @@ model.add_pool('avg_pool', 'avg', ksize=[1, 6, 6, 1], stride=[1, 6, 6, 1])
 model.add_fully_connected('fc', size=128)
 
 model.add_mse_loss('mse_loss')
-model.add_adam_optimizer('optimizer', init_learning_rate=0.001, decay=False)
+model.add_adam_optimizer('optimizer', init_learning_rate=0.005, decay=False)
 model.add_summaries('summaries')    
     
 total parameters = 48178

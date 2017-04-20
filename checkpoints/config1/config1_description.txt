@@ -1,5 +1,5 @@
 
-    model = CNN_Model('config1_dropout_fc_0.0', DATA_DIR, LOG_DIR, SAVE_DIR, IMAGE_DIM, TEMPLATE_DIM, TRAIN_IMAGES, 
+    model = CNN_Model('config1', DATA_DIR, LOG_DIR, SAVE_DIR, IMAGE_DIM, TEMPLATE_DIM, TRAIN_IMAGES, 
                       TRAIN_TEMPLATES, VALID_IMAGES, VALID_TEMPLATES, NUM_TRAIN_IMAGES, NUM_VALID_IMAGES, EMA_DECAY, BN_EPSILON)
 
     model.add_conv('conv_1', ksize=[5, 5, 1, 32], padding='VALID')
@@ -18,7 +18,7 @@
     model.add_pool('pool_4', 'max', ksize=[1, 2, 2, 1], stride=[1, 2, 2, 1])
     model.add_batch_norm('bn_4')
 
-    model.add_fully_connected('fc', size=128, dropout=0.0)
+    model.add_fully_connected('fc', size=128)
 
     model.add_mse_loss('mse_loss')
     model.add_adam_optimizer('optimizer', init_learning_rate=0.01, decay=False)
