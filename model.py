@@ -218,9 +218,20 @@ class CNN_Model():
         for j in range(n_batches):
             images = self.valid_images[j*valid_batch_size:(j+1)*valid_batch_size, :, :, :]
             templates = self.valid_templates[j*valid_batch_size:(j+1)*valid_batch_size, :]
-            total_valid_loss += self.sess.run(self.loss, {self.images:images, self.templates:templates, self.is_train:False})
+            total_valid_loss += self.sess.run(self.loss, {self.images: images, self.templates: templates, self.is_train: False})
         total_valid_loss /= n_batches
         summary = self.sess.run(self.valid_loss_summary, {self.validation_loss : total_valid_loss})
         self.writer.add_summary(summary, i+1)
         return total_valid_loss
     
+    def predict(self, images, batch_size):
+        """Transform images.
+        """
+        batch_predictions = []
+        n_batches = int(images.shape[0] / batch_size)
+        self.initialize_session(restore=True)
+        for j in range(n_batches):
+            batch_images = images[j*batch_size:(j+1)*batch_size, :, :, :]
+            batch_predictions.append(self.sess.run(self.layers[-1], {self.images : batch_images, self.is_train : False}))
+        self.close_session()
+        return np.concatenate(batch_predictions)
