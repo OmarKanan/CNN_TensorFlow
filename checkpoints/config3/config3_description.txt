@@ -23,7 +23,7 @@
     model.add_fully_connected('fc', size=128)
 
     model.add_mse_loss('mse_loss')
-    model.add_adam_optimizer('optimizer', init_learning_rate=0.01, decay=False)
+    model.add_adam_optimizer('optimizer', init_learning_rate=0.005, decay=False)
     model.add_summaries('summaries')
 
     total parameters = 49018
