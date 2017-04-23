@@ -3,6 +3,7 @@ import sys
 import os
 import numpy as np
 import tensorflow as tf
+import data_reader
 
     
 def create_logs_and_checkpoints_folders(log_dir, save_dir, name):
@@ -33,3 +34,16 @@ def num_parameters(model):
     for var in tf.trainable_variables():
         params += var.get_shape().num_elements()
     return params
+
+def predict_test_and_save(filename, model, data_dir, test_images, valid_templates, num_test_images, image_dim, template_dim):
+    """Predict test templates and save them to binary file.
+    """
+    test_images, _ = data_reader.load_data(data_dir, test_images, valid_templates, num_test_images, image_dim, template_dim)
+    predictions = model.predict(test_images, batch_size=1000)
+
+    f = open(os.path.join(data_dir, filename), 'wb')
+    for i in range(num_test_images):
+        f.write(predictions[i, :])
+    f.close()
+    print("Predictions saved at " + os.path.join(data_dir, filename))
+    

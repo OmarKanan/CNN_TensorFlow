@@ -235,3 +235,4 @@ class CNN_Model():
             batch_predictions.append(self.sess.run(self.layers[-1], {self.images : batch_images, self.is_train : False}))
         self.close_session()
         return np.concatenate(batch_predictions)
+    
